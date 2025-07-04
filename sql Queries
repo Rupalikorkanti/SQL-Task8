@@ -1,0 +1,26 @@
+DELIMITER //
+
+-- Stored Procedure: Get orders by customer ID
+CREATE PROCEDURE GetOrdersByCustomer(IN cust_id INT)
+BEGIN
+    SELECT o.OrderID, o.OrderDate, o.Amount
+    FROM Orders o
+    WHERE o.CustomerID = cust_id;
+END //
+
+-- Function: Calculate 10% bonus on order amount
+CREATE FUNCTION CalculateBonus(amount DECIMAL(10,2))
+RETURNS DECIMAL(10,2)
+DETERMINISTIC
+BEGIN
+    RETURN amount * 0.10;
+END //
+
+DELIMITER ;
+
+-- Example usage of procedure
+CALL GetOrdersByCustomer(1);
+-- Example usage of function
+ SELECT OrderID, Amount, CalculateBonus(Amount) AS Bonus FROM Orders;
+
+
